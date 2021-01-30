@@ -9,7 +9,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li v-for="link in links" class="nav-item">
-                            <a class="nav-link" aria-current="page" :href="link.href">{{link.title}}</a>
+                            <router-link class="nav-link" :to="link.href">{{link.title}}</router-link>
                         </li>
                     </ul>
                 </div>
@@ -24,7 +24,7 @@
             return {
                 links: [
                     {
-                        title: 'Главаная',
+                        title: 'Главная',
                         href: "/"
                     },
                     {

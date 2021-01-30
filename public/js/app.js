@@ -1745,7 +1745,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       links: [{
-        title: 'Главаная',
+        title: 'Главная',
         href: "/"
       }, {
         title: 'Все пользователи',
@@ -37683,16 +37683,18 @@ var render = function() {
               "ul",
               { staticClass: "navbar-nav me-auto mb-2 mb-lg-0" },
               _vm._l(_vm.links, function(link) {
-                return _c("li", { staticClass: "nav-item" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "nav-link",
-                      attrs: { "aria-current": "page", href: link.href }
-                    },
-                    [_vm._v(_vm._s(link.title))]
-                  )
-                ])
+                return _c(
+                  "li",
+                  { staticClass: "nav-item" },
+                  [
+                    _c(
+                      "router-link",
+                      { staticClass: "nav-link", attrs: { to: link.href } },
+                      [_vm._v(_vm._s(link.title))]
+                    )
+                  ],
+                  1
+                )
               }),
               0
             )
