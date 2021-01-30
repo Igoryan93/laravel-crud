@@ -1,0 +1,14 @@
+body {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+body .wrapper {
+  min-height: calc(100vh - 112px);
+  padding: 50px 0;
+}
+
