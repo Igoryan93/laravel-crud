@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h1 class="mb-3">Все пользователи</h1>
+        <h1>Пользователь {{user.first_name + ' ' + user.surname + ' ' + user.last_name }}</h1>
         <spinner v-if="loading"></spinner>
         <table class="table" v-else-if="!loading && !error">
             <thead>
@@ -11,31 +11,28 @@
                     <th scope="col">Отчество</th>
                     <th scope="col">E-mail</th>
                     <th scope="col">Дата регистрации</th>
+                    <th scope="col">Дата обновления</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="user in users">
+                <tr>
                     <th scope="row">{{user.id}}</th>
                     <td>{{user.first_name}}</td>
                     <td>{{user.surname}}</td>
                     <td>{{user.last_name}}</td>
                     <td>{{user.email}}</td>
                     <td>{{user.created_at}}</td>
-                    <td>
-                        <router-link :to="`/users/${user.id}`"  class="btn btn-primary">Посмотреть</router-link>
-                        <a href="#" class="btn btn-warning">Изменить</a>
-                        <a href="#" class="btn btn-danger" onclick="return confirm('Вы уверены? Пользователь будет удален навсегда!')">Удалить</a>
-                    </td>
+                    <td>{{user.updated_at}}</td>
                 </tr>
             </tbody>
         </table>
-        <div class="alert alert-danger" v-if="error">Страница не найдена</div>
+        <div class="alert alert-danger" v-if="error">Такого пользователя не существует</div>
     </div>
 </template>
 
 <script>
-    import Spinner from "../parts/Spinner.vue";
+    import Spinner from "../parts/Spinner";
     export default {
         components: {
             Spinner
@@ -44,20 +41,20 @@
             return {
                 loading: true,
                 error: false,
-                users: []
+                user: []
             }
         },
         mounted() {
-            this.loadUsers()
+            this.getUser(this.$route.params.id)
         },
         methods: {
-            loadUsers() {
-                axios.
-                    get('/api/users')
+            getUser(id) {
+                axios
+                    .get('/api/users/' + id)
                     .then(response => {
-                        this.users = response.data;
+                        this.user = response.data
                         setTimeout(() => {
-                            this.loading = false;
+                            this.loading = false
                         }, 500)
                     })
                     .catch(err => {

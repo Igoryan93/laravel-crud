@@ -13,6 +13,16 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+
+Route::resource('users', 'Api\UsersController');
+
+Route::resource('orders', 'Api\OrdersController')->except([
+    'create', 'edit', 'show', 'store', 'update', 'destroy'
+]);
+Route::resource('orders_total', 'Api\OrdersTotalController')->except([
+    'create', 'edit', 'show', 'store', 'update', 'destroy'
+]);
+
