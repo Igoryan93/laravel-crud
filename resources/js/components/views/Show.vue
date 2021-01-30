@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h1>Пользователь {{user.first_name + ' ' + user.surname + ' ' + user.last_name }}</h1>
+        <h1>Пользователь</h1>
         <spinner v-if="loading"></spinner>
         <table class="table" v-else-if="!loading && !error">
             <thead>

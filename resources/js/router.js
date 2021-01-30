@@ -9,6 +9,7 @@ import Edit from "./components/views/Edit.vue";
 import Create from "./components/views/Create.vue";
 import Orders from "./components/views/Orders.vue";
 import ShowUser from "./components/views/Show.vue";
+import Page404 from "./components/views/errors/Page404.vue";
 
 const routes = [
     {
@@ -34,6 +35,10 @@ const routes = [
     {
         path: '/orders',
         component: Orders
+    },
+    {
+        path: '*',
+        component: Page404
     }
 ];
 
