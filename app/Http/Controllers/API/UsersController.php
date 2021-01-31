@@ -45,14 +45,14 @@ class UsersController extends Controller
             'last_name' => 'required|min:2',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:5',
-            'password_confirmed' => 'same:password'
+            'password_confirmation' => 'same:password'
         ]);
 
         if($validate->fails()) {
-            return [
+            return response()->json([
                 'status' => false,
-                'errors' => $validate->errors()
-            ];
+                'errors' => $validate->errors()->first()
+            ])->setStatusCode(404);
         }
 
         $user = User::create([

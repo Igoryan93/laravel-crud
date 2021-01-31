@@ -1772,6 +1772,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _parts_Spinner__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../parts/Spinner */ "./resources/js/components/parts/Spinner.vue");
 //
 //
 //
@@ -1821,8 +1822,55 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Create"
+  components: {
+    Spinner: _parts_Spinner__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      loading: false,
+      form: {
+        first_name: '',
+        surname: '',
+        last_name: '',
+        email: '',
+        password: '',
+        password_confirmation: ''
+      },
+      error: false,
+      valError: '',
+      success: false
+    };
+  },
+  methods: {
+    store: function store() {
+      var _this = this;
+
+      this.loading = true;
+      axios.post('/api/users', this.form, {
+        header: {
+          "Content-type": "application/json"
+        }
+      }).then(function (response) {
+        if (response.data.status) {
+          setTimeout(function () {
+            _this.success = true;
+            _this.valError = false;
+            _this.form.first_name = _this.form.surname = _this.form.last_name = _this.form.email = _this.form.password = _this.form.password_confirmation = '';
+            _this.loading = false;
+          }, 500);
+        }
+      })["catch"](function (err) {
+        setTimeout(function () {
+          _this.valError = err.response.data.errors;
+          _this.success = false;
+          _this.loading = false;
+        }, 500);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -37981,27 +38029,27 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
+  return _c(
+    "div",
+    { staticClass: "container create" },
+    [
       _c("h1", { staticClass: "mb-3" }, [_vm._v("Добавить пользователя")]),
       _vm._v(" "),
-      _c("div", { staticClass: "alert alert-danger" }, [
-        _vm._v("\n        Ошибка валидации\n    ")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "alert alert-success" }, [
-        _vm._v("\n        Пользователь добавлен\n    ")
-      ]),
+      _vm.loading
+        ? _c("spinner")
+        : _vm.valError
+        ? _c("div", { staticClass: "alert alert-danger" }, [
+            _vm._v("\n       " + _vm._s(_vm.valError) + "\n    ")
+          ])
+        : _vm.success
+        ? _c("div", { staticClass: "alert alert-success" }, [
+            _vm._v("\n        Пользователь добавлен\n    ")
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-md-6" }, [
-          _c("form", { attrs: { action: "", method: "POST" } }, [
+          _c("form", { ref: "form" }, [
             _c("div", { staticClass: "form-group mb-3" }, [
               _c(
                 "label",
@@ -38010,8 +38058,25 @@ var staticRenderFns = [
               ),
               _vm._v(" "),
               _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.first_name,
+                    expression: "form.first_name"
+                  }
+                ],
                 staticClass: "form-control",
-                attrs: { type: "text", id: "first_name", name: "first_name" }
+                attrs: { type: "text", id: "first_name" },
+                domProps: { value: _vm.form.first_name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "first_name", $event.target.value)
+                  }
+                }
               })
             ]),
             _vm._v(" "),
@@ -38021,8 +38086,25 @@ var staticRenderFns = [
               ]),
               _vm._v(" "),
               _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.surname,
+                    expression: "form.surname"
+                  }
+                ],
                 staticClass: "form-control",
-                attrs: { type: "text", id: "surname", name: "surname" }
+                attrs: { type: "text", id: "surname" },
+                domProps: { value: _vm.form.surname },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "surname", $event.target.value)
+                  }
+                }
               })
             ]),
             _vm._v(" "),
@@ -38034,8 +38116,25 @@ var staticRenderFns = [
               ),
               _vm._v(" "),
               _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.last_name,
+                    expression: "form.last_name"
+                  }
+                ],
                 staticClass: "form-control",
-                attrs: { type: "text", id: "last_name", name: "last_name" }
+                attrs: { type: "text", id: "last_name" },
+                domProps: { value: _vm.form.last_name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "last_name", $event.target.value)
+                  }
+                }
               })
             ])
           ])
@@ -38048,8 +38147,25 @@ var staticRenderFns = [
             ]),
             _vm._v(" "),
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.email,
+                  expression: "form.email"
+                }
+              ],
               staticClass: "form-control",
-              attrs: { type: "email", id: "email", name: "email" }
+              attrs: { type: "email", id: "email" },
+              domProps: { value: _vm.form.email },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.form, "email", $event.target.value)
+                }
+              }
             })
           ]),
           _vm._v(" "),
@@ -38059,8 +38175,25 @@ var staticRenderFns = [
             ]),
             _vm._v(" "),
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.password,
+                  expression: "form.password"
+                }
+              ],
               staticClass: "form-control",
-              attrs: { type: "email", id: "password", name: "password" }
+              attrs: { type: "password", id: "password" },
+              domProps: { value: _vm.form.password },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.form, "password", $event.target.value)
+                }
+              }
             })
           ]),
           _vm._v(" "),
@@ -38072,11 +38205,28 @@ var staticRenderFns = [
             ),
             _vm._v(" "),
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.password_confirmation,
+                  expression: "form.password_confirmation"
+                }
+              ],
               staticClass: "form-control",
-              attrs: {
-                type: "email",
-                id: "password_confirmed",
-                name: "password"
+              attrs: { type: "password", id: "password_confirmed" },
+              domProps: { value: _vm.form.password_confirmation },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.form,
+                    "password_confirmation",
+                    $event.target.value
+                  )
+                }
               }
             })
           ])
@@ -38086,14 +38236,22 @@ var staticRenderFns = [
           _c("div", { staticClass: "form-group" }, [
             _c("input", {
               staticClass: "btn btn-success",
-              attrs: { type: "submit", value: "Добавить пользователя" }
+              attrs: { type: "submit", value: "Добавить пользователя" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.store($event)
+                }
+              }
             })
           ])
         ])
       ])
-    ])
-  }
-]
+    ],
+    1
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
