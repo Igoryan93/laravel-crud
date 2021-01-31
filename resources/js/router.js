@@ -25,7 +25,7 @@ const routes = [
         component: ShowUser
     },
     {
-        path: '/users/:id/edit/:id',
+        path: '/users/:id/edit',
         component: Edit
     },
     {

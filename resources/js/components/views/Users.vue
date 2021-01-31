@@ -11,6 +11,7 @@
                     <th scope="col">Отчество</th>
                     <th scope="col">E-mail</th>
                     <th scope="col">Дата регистрации</th>
+                    <th scope="col">Дата Изменения</th>
                     <th></th>
                 </tr>
             </thead>
@@ -22,9 +23,10 @@
                     <td>{{user.last_name}}</td>
                     <td>{{user.email}}</td>
                     <td>{{user.created_at}}</td>
+                    <td>{{user.updated_at}}</td>
                     <td>
                         <router-link :to="`/users/${user.id}`"  class="btn btn-primary">Посмотреть</router-link>
-                        <a href="#" class="btn btn-warning">Изменить</a>
+                        <router-link :to="`/users/${user.id}/edit`" class="btn btn-warning">Изменить</router-link>
                         <a href="#" class="btn btn-danger" onclick="return confirm('Вы уверены? Пользователь будет удален навсегда!')">Удалить</a>
                     </td>
                 </tr>

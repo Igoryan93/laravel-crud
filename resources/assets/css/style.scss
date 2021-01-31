@@ -27,5 +27,24 @@ body {
     .create {
         position: relative;
     }
+    .container-xl,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container {
+        max-width: 1300px;
+    }
+
+    table {
+        th, td {
+            vertical-align: middle!important;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            margin: 5px 0;
+        }
+    }
+
 }
 

@@ -52,7 +52,7 @@ class UsersController extends Controller
             return response()->json([
                 'status' => false,
                 'errors' => $validate->errors()->first()
-            ])->setStatusCode(404);
+            ])->setStatusCode(403);
         }
 
         $user = User::create([
@@ -97,7 +97,19 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+
+
+        if(empty($user)) {
+            return response()->json([
+              'status' => false
+            ])->setStatusCode(403);
+        }
+
+        return response()->json([
+            'status' => true,
+            'user' => $user
+        ]);
     }
 
     /**
@@ -109,7 +121,45 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+
+        if(empty($user)) {
+            return response()->json([
+                'status' => false
+            ])->setStatusCode(404);
+        }
+
+        $validate = Validator::make($request->all(), [
+            'first_name' => 'required|min:2',
+            'surname' => 'required|min:2',
+            'last_name' => 'required|min:2',
+            'password' => 'required|min:5',
+            'password_confirmation' => 'same:password'
+        ]);
+
+        if($validate->fails()) {
+            return response()->json([
+                'status' => false,
+                'error' => $validate->errors()->first()
+            ])->setStatusCode(403);
+        }
+
+        $update = $user->where('id', $id)->update([
+            'first_name' => $request->first_name,
+            'surname' => $request->surname,
+            'last_name' => $request->last_name,
+            'password' => Hash::make($request->password),
+        ]);
+
+        if(!$update) {
+            return response()->json([
+                'status' => false
+            ])->setStatusCode(200);
+        } else {
+            return response()->json([
+                'status' => true,
+            ])->setStatusCode(200);
+        }
     }
 
     /**

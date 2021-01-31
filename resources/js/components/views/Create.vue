@@ -8,9 +8,9 @@
         <div class="alert alert-success" v-else-if="success">
             Пользователь добавлен
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <form ref="form">
+        <form>
+            <div class="row">
+                <div class="col-md-6">
                     <div class="form-group mb-3">
                         <label for="first_name" class="mb-1">Имя</label>
                         <input type="text" id="first_name" v-model="form.first_name" class="form-control">
@@ -23,28 +23,28 @@
                         <label for="last_name" class="mb-1">Отчество</label>
                         <input type="text" id="last_name" v-model="form.last_name" class="form-control">
                     </div>
-                </form>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label for="email" class="mb-1">E-mail</label>
+                        <input type="email" id="email" v-model="form.email" class="form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="password" class="mb-1">Пароль</label>
+                        <input type="password" id="password" v-model="form.password" class="form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="password_confirmed" class="mb-1">Повторите пароль</label>
+                        <input type="password" id="password_confirmed" v-model="form.password_confirmation" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-12 d-flex justify-content-center">
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-success" value="Добавить пользователя" @click.prevent="store">
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-group mb-3">
-                    <label for="email" class="mb-1">E-mail</label>
-                    <input type="email" id="email" v-model="form.email" class="form-control">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="password" class="mb-1">Пароль</label>
-                    <input type="password" id="password" v-model="form.password" class="form-control">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="password_confirmed" class="mb-1">Повторите пароль</label>
-                    <input type="password" id="password_confirmed" v-model="form.password_confirmation" class="form-control">
-                </div>
-            </div>
-            <div class="col-lg-12 d-flex justify-content-center">
-                <div class="form-group">
-                    <input type="submit" class="btn btn-success" value="Добавить пользователя" @click.prevent="store">
-                </div>
-            </div>
-        </div>
+        </form>
     </div>
 </template>
 
@@ -65,7 +65,6 @@
                     password: '',
                     password_confirmation: ''
                 },
-                error: false,
                 valError: '',
                 success : false
             }
