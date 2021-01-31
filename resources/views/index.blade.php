@@ -17,7 +17,7 @@
     <v-header></v-header>
     <div class="wrapper">
 
-        <router-view></router-view>
+        <router-view ></router-view>
 
     </div>
     <v-footer></v-footer>

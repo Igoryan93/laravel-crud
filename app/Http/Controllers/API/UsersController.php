@@ -60,7 +60,8 @@ class UsersController extends Controller
             'surname' => $request->surname,
             'last_name' => $request->last_name,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'email_verified_at' => date('Y-m-d h:i:s')
         ]);
 
         return [
@@ -166,10 +167,29 @@ class UsersController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Responses
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+
+        if(empty($user)) {
+            return response()->json([
+                'status' => false
+            ])->setStatusCode(404);
+        }
+
+        $delete = $user->where('id', $id)->delete();
+
+        if(!$delete) {
+            return response()->json([
+                'status' => false
+            ])->setStatusCode(403);
+        }
+
+        return response()->json([
+            'status' => true,
+            'user' => $delete
+        ]);
     }
 }
