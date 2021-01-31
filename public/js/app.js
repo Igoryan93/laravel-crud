@@ -2302,6 +2302,20 @@ __webpack_require__.r(__webpack_exports__);
         _this.error = true;
         _this.loading = false;
       });
+    },
+    destroy: function destroy(id) {
+      var _this2 = this;
+
+      alert('Вы уверены? Пользователь будет удален навсегда');
+      axios["delete"]('/api/users/' + id).then(function (response) {
+        if (response.data.status) {
+          _this2.loadUsers();
+
+          alert('Пользователь был удален');
+        }
+      })["catch"](function (err) {
+        console.log(err.response);
+      });
     }
   }
 });
@@ -38861,7 +38875,7 @@ var render = function() {
       _vm.loading
         ? _c("spinner")
         : !_vm.loading && !_vm.error
-        ? _c("table", { staticClass: "table" }, [
+        ? _c("table", { ref: "table", staticClass: "table" }, [
             _c("thead", [
               _c("tr", [
                 _c("th", { attrs: { scope: "col" } }, [_vm._v("ID")]),
@@ -38889,7 +38903,7 @@ var render = function() {
             _c(
               "tbody",
               _vm._l(_vm.users, function(user) {
-                return _c("tr", [
+                return _c("tr", { key: user.id }, [
                   _c("th", { attrs: { scope: "row" } }, [
                     _vm._v(_vm._s(user.id))
                   ]),
@@ -38928,13 +38942,14 @@ var render = function() {
                       ),
                       _vm._v(" "),
                       _c(
-                        "a",
+                        "button",
                         {
                           staticClass: "btn btn-danger",
-                          attrs: {
-                            href: "#",
-                            onclick:
-                              "return confirm('Вы уверены? Пользователь будет удален навсегда!')"
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.destroy(user.id)
+                            }
                           }
                         },
                         [_vm._v("Удалить")]

@@ -2,7 +2,7 @@
     <div class="container">
         <h1 class="mb-3">Все пользователи</h1>
         <spinner v-if="loading"></spinner>
-        <table class="table" v-else-if="!loading && !error">
+        <table class="table" v-else-if="!loading && !error"  ref="table">
             <thead>
                 <tr>
                     <th scope="col">ID</th>
@@ -16,7 +16,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="user in users">
+                <tr v-for="user in users" :key="user.id">
                     <th scope="row">{{user.id}}</th>
                     <td>{{user.first_name}}</td>
                     <td>{{user.surname}}</td>
@@ -27,7 +27,7 @@
                     <td>
                         <router-link :to="`/users/${user.id}`"  class="btn btn-primary">Посмотреть</router-link>
                         <router-link :to="`/users/${user.id}/edit`" class="btn btn-warning">Изменить</router-link>
-                        <a href="#" class="btn btn-danger" onclick="return confirm('Вы уверены? Пользователь будет удален навсегда!')">Удалить</a>
+                        <button class="btn btn-danger"  @click.prevent="destroy(user.id)">Удалить</button>
                     </td>
                 </tr>
             </tbody>
@@ -65,6 +65,20 @@
                     .catch(err => {
                         this.error = true
                         this.loading = false;
+                    })
+            },
+            destroy(id) {
+                alert('Вы уверены? Пользователь будет удален навсегда');
+                axios
+                    .delete('/api/users/' + id)
+                    .then(response => {
+                        if(response.data.status) {
+                            this.loadUsers();
+                            alert('Пользователь был удален');
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err.response);
                     })
             }
         }
